@@ -13,7 +13,7 @@ using Geolocation;
 
 namespace Teltonika
 {
-    public class Program
+    public class Program // main class
     {
         List<DataJSON> listJson;
         List<DataCSV> listCSV;
@@ -44,23 +44,23 @@ namespace Teltonika
         double RoadDivededByTime;
 
 
-        private void GetDataJson()
+        private void GetDataJson() //function to get JSON data
         {
             StreamReader ReadJson = new StreamReader("2019-07.json");
             json = ReadJson.ReadToEnd();
         }
-        private void DeserializeJsonData()
+        private void DeserializeJsonData() // deserialiazation of Json data
         {
             listJson = JsonConvert.DeserializeObject<List<DataJSON>>(json);
         }
-        private void ShowJsonData()
+        private void ShowJsonData() // output to console of JSON data
         {
             foreach (var item in listJson)
             {
                 Console.WriteLine(item.Latitude + " " + item.Longitude + " " + item.GpsTime + " " + item.Speed + " " + item.Angle + " " + item.Altitude + " " + item.Satellites);
             }
         }
-        private void GetDataCSV()
+        private void GetDataCSV() // obtaining CSV data
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -71,14 +71,14 @@ namespace Teltonika
 
             listCSV = csv.GetRecords<DataCSV>().ToList();
         }
-        private void ShowDataCSV()
+        private void ShowDataCSV()// output to console of CSV data
         {
             foreach (var item in listCSV)
             {
                 Console.WriteLine(item.Latitude + " " + item.Longitude + " " + item.GpsTime + " " + item.Speed + " " + item.Angle + " " + item.Altitude + " " + item.Satellites);
             }
         }
-        private void SatelitesInsertToList()
+        private void SatelitesInsertToList() //putting all satelites from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -89,7 +89,7 @@ namespace Teltonika
                 satelites.Add(item.Satellites);
             }
         }
-        private void LongitudeInsertToList()
+        private void LongitudeInsertToList() //putting all longtitudes from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -100,7 +100,7 @@ namespace Teltonika
                 Longitude.Add(item.Longitude);
             }
         }
-        private void GPSInsertToList()
+        private void GPSInsertToList() //putting all GPS from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -111,7 +111,7 @@ namespace Teltonika
                 GpsTime.Add(item.GpsTime);
             }
         }
-        private void LatitudeInsertToList()
+        private void LatitudeInsertToList() //putting all latitudes from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -122,7 +122,7 @@ namespace Teltonika
                 Latitude.Add(item.Latitude);
             }
         }
-        private void AngleInsertToList()
+        private void AngleInsertToList() //putting all angles from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -133,7 +133,7 @@ namespace Teltonika
                 Angle.Add(item.Angle);
             }
         }
-        private void AltitudeInsertToList()
+        private void AltitudeInsertToList() //putting all altitudes from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -144,7 +144,7 @@ namespace Teltonika
                 Altitude.Add(item.Altitude);
             }
         }
-        private void SpeedInsertToList()
+        private void SpeedInsertToList() //putting all speeds from both files to one list
         {
             foreach (var item in listCSV)
             {
@@ -155,15 +155,15 @@ namespace Teltonika
                 speed.Add(item.Speed);
             }
         }
-        private void SatelitesValueSort()
+        private void SatelitesValueSort() // sort satelites
         {
             satelites.Sort();
         }
-        private void SpeedValueSort()
+        private void SpeedValueSort() // sort speed
         {
             speed.Sort();
         }
-        private void SatelitesValueCount()
+        private void SatelitesValueCount() // counting quantity of satelites
         {
             int a = 0;
             foreach(var item in satelites)
@@ -179,7 +179,7 @@ namespace Teltonika
                 }
             }
         }
-        private void SpeedValueCount()
+        private void SpeedValueCount() // counting quantity of speed values
         {
             int a = 10;
             int b = 0;
@@ -197,7 +197,7 @@ namespace Teltonika
                 }
             }
         }
-         private void GraphOfSpeed()
+         private void GraphOfSpeed() // transefering from one array to other ( idea was to divide so it would be easier to draw a graph, but idea changed in the middle of development)
         {
 
             for (int i = 0; i < ArrayForSpeedSumGraph.Length; i++)
@@ -205,7 +205,7 @@ namespace Teltonika
                 ArrayForSpeedSumGraph[i] = ArrayOfSpeed[i];;
             }
         }
-        private void GraphOfSatelites()
+        private void GraphOfSatelites() // transfering from one array to other and lowering the count for more comfortable numbers
         {
 
             for (int i = 0; i < ArrayOfSatelites.Length; i++)
@@ -214,7 +214,7 @@ namespace Teltonika
             }
         }
 
-        private void ShowAllSatelites()
+        private void ShowAllSatelites() //output all satelites
         {
             for (int i = 0; i <ArrayForSatelitesGraph.Length; i++)
             {
@@ -222,7 +222,7 @@ namespace Teltonika
                 Console.WriteLine();
             }
         }
-        private void CountSpeed()
+        private void CountSpeed() // count  speed quantity in different range
         {
             int sum=0;
             int a=10;
@@ -241,7 +241,7 @@ namespace Teltonika
                 }
             }
         }
-        private void DrawGraphOfSpeed()
+        private void DrawGraphOfSpeed() //output custom graph to screen in console
         {
             int a = 0;
             int b = 9;
@@ -281,7 +281,7 @@ namespace Teltonika
             Console.WriteLine(" ");
         }
 
-        private void DrawGraphOfSatelites()
+        private void DrawGraphOfSatelites()//output custom graph to screen in console
         {
             Console.WriteLine("---Graph of sattelites data---");
             for (int i = 0; i < ArrayForSatelitesGraph.Length; i++)
@@ -325,15 +325,15 @@ namespace Teltonika
             Console.WriteLine(" ");
 
         }
-        private void Distance()
+        private void Distance() // count the quantity of distances that go further than 100km
         {
-            for(int i = 1; i < Longitude.Count; i++)
+            for(int i = 1; i < Longitude.Count; i++) // doesn't matter if its longtitude or latitude, the count is same for both
             {
-                for(int j = 0; j < 1000; j++)
+                for(int j = 0; j < 1000; j++) // made here j < 1000 for working principals, cause to be correct you should count to Longtitude.Count or Latitude.Count, but then the number are too big and it takes a lot of time.
                 {
                     double distance = GeoCalculator.GetDistance(Latitude[i-1],Longitude[i-1],Latitude[j],Longitude[j]); // calculates in miles
                     //Console.WriteLine(distance);
-                    if(distance >= 62) //62 miles is ~100km
+                    if(distance >= 62) //100 km is about 62 miles
                     {
                         ListOfDistances.Add(distance);
                         LatitudeStart.Add(Latitude[i - 1]);
@@ -351,7 +351,7 @@ namespace Teltonika
                 }
             }
         }
-        private void FastestRoad()
+        private void FastestRoad() // counting all possible speeds when distance is over 100km
         {
             if (ListOfDistances.Count != 0)
             {
@@ -379,7 +379,7 @@ namespace Teltonika
 
 
         }
-        private void FindFastestRoad()
+        private void FindFastestRoad()  // finding the biggest speed in list
         {
             if(ListOfDistances.Count != 0)
             {
@@ -393,7 +393,7 @@ namespace Teltonika
             }
             
         }
-        private void OutputFastestRoad()
+        private void OutputFastestRoad() //output to console with all necesary information
         {
             if(ListOfDistances.Count != 0)
             {
@@ -410,7 +410,7 @@ namespace Teltonika
             }
 
         }
-        static void Main(string[] args)
+        static void Main(string[] args) // main to turn on necesasy functions
         {
             Program program = new Program();
             program.GetDataJson();
